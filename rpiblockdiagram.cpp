@@ -10,6 +10,8 @@
 #include <unistd.h>
 #include <math.h>
 
+#define TWOPI 6.28318531
+
 int mysat_rtbd(int vin){
   int mymax = 255;
   int mymin = -255;
