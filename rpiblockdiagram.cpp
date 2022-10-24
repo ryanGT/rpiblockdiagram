@@ -8,7 +8,7 @@
 #include <linux/i2c-dev.h>
 #include <i2c/smbus.h>
 #include <unistd.h>
-
+#include <math.h>
 
 int mysat_rtbd(int vin){
   int mymax = 255;
@@ -129,12 +129,12 @@ swept_sine_input::swept_sine_input(float myslope, float myamp, float myt_end, fl
     t_on = myt_on;
 }
 
-float swept_sine_input::set_t_on(float myt){
+void swept_sine_input::set_t_on(float myt){
     t_on = myt;
 }
 
 
-float swept_sine_input::set_t_off(float stop_t){
+void swept_sine_input::set_t_off(float stop_t){
     t_off = stop_t - t_end;
 }
 
