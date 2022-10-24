@@ -96,6 +96,33 @@ public:
 };
 
 
+class fixed_sine_input: public block{
+public:
+  float amp;
+  float freq;
+  //float output;// base class as int output
+  fixed_sine_input(float myfreq, float myamp);
+  int find_output(float t);
+};
+
+
+class swept_sine_input: public block{
+ public:
+    float slope;
+    float amp;
+    float t_end;
+    float t_off;
+    float t_on;
+    float freq;
+
+    swept_sine_input(float myslope, float myamp, float myt_end=2, float myt_on=1);
+
+    float set_t_on(float myt);
+    float set_t_off(float stop_t);
+    int find_output(float t);
+};
+
+
 class actuator{
  public:
   // pure virtual function

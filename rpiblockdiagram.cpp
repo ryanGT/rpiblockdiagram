@@ -108,6 +108,54 @@ int pulse_input::find_output(float t){
 };
 
 
+fixed_sine_input::fixed_sine_input(float myfreq, float myamp){
+    freq = myfreq;
+    amp = myamp;
+}
+
+
+int fixed_sine_input::find_output(float t){
+    // do I want this to return a float or an int 
+    // or does it matter?
+    output = (int)amp*sin(TWOPI*freq*t);
+    return(output);
+};
+
+
+swept_sine_input::swept_sine_input(float myslope, float myamp, float myt_end, float myt_on){
+    slope = myslope;
+    amp = myamp;
+    t_end = myt_end;
+    t_on = myt_on;
+}
+
+float swept_sine_input::set_t_on(float myt){
+    t_on = myt;
+}
+
+
+float swept_sine_input::set_t_off(float stop_t){
+    t_off = stop_t - t_end;
+}
+
+int swept_sine_input::find_output(float t){
+    // do I want this to return a float or an int 
+    // or does it matter?
+    float t_shift;
+
+    if ((t < t_on) || (t > t_off)){
+	output = 0;
+    }
+    else{
+	t_shift = t - t_on;
+    	freq = slope*t_shift;
+    	output = (int)(amp*sin(TWOPI*freq*t_shift));
+    }
+
+    return(output);
+};
+
+
 pwm_output::pwm_output(int PWM_PIN){
   pwm_pin = PWM_PIN;
 };
