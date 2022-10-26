@@ -124,11 +124,14 @@ int fixed_sine_input::find_output(float t){
 };
 
 
-swept_sine_input::swept_sine_input(float myslope, float myamp, float myt_end, float myt_on){
+swept_sine_input::swept_sine_input(float myslope, float myamp, 
+                                   float mydeadtime, 	
+	                           float myt_end, float myt_on){
     slope = myslope;
     amp = myamp;
     t_end = myt_end;
     t_on = myt_on;
+    dead_time = mydeadtime;
 }
 
 void swept_sine_input::set_t_on(float myt){
@@ -137,7 +140,10 @@ void swept_sine_input::set_t_on(float myt){
 
 
 void swept_sine_input::set_t_off(float stop_t){
-    t_off = stop_t - t_end;
+    t_off = stop_t - dead_time;
+    if (t_off < 0){
+	t_off = 0;
+    }
 }
 
 int swept_sine_input::find_output(float t){

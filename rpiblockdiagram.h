@@ -114,8 +114,10 @@ class swept_sine_input: public block{
     float t_off;
     float t_on;
     float freq;
+    float dead_time;
 
-    swept_sine_input(float myslope, float myamp, float myt_end=2, float myt_on=1);
+    swept_sine_input(float myslope, float myamp, float mydeadtime=1, 
+                     float myt_end=2, float myt_on=1);
 
     void set_t_on(float myt);
     void set_t_off(float stop_t);
