@@ -315,28 +315,28 @@ public:
 
 class greater_than_block: public logical_block{
 public:
-  greater_than_block(block *in1=NULL, block *in2=NULL);
+  //greater_than_block(block *in1=NULL, block *in2=NULL);
   int find_output();
   int find_output(float t);
 };
 
 class less_than_block: public logical_block{
 public:
-  less_than_block(block *in1=NULL, block *in2=NULL);
+  //less_than_block(block *in1=NULL, block *in2=NULL);
   int find_output();
   int find_output(float t);
 };
 
 class and_block: public logical_block{
 public:
-  and_block(block *in1=NULL, block *in2=NULL);
+  //and_block(block *in1=NULL, block *in2=NULL);
   int find_output();
   int find_output(float t);
 };
 
 class or_block: public logical_block{
 public:
-  or_block(block *in1=NULL, block *in2=NULL);
+  //or_block(block *in1=NULL, block *in2=NULL);
   int find_output();
   int find_output(float t);
 };
