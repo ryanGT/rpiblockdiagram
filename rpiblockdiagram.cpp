@@ -503,7 +503,7 @@ int and_block::find_output(){
   //int output;
   value1 = input1->read_output();
   value2 = input2->read_output();
-  if (value1 > 0) && (value2 > 0){
+  if ((value1 > 0) && (value2 > 0)){
     output = 1;
   }
   else{
@@ -517,7 +517,7 @@ int or_block::find_output(){
   //int output;
   value1 = input1->read_output();
   value2 = input2->read_output();
-  if (value1 > 0) || (value2 > 0){
+  if ((value1 > 0) || (value2 > 0)){
     output = 1;
   }
   else{
