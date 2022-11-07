@@ -476,6 +476,17 @@ int greater_than_block::find_output(){
   return(output);
 };
 
+int logical_block::find_output(){
+    // this is kind of like a virtual class, but I stink
+    // at doing virtual classes correctly
+    // - each derived class should provide its own
+    //   version of this method
+    // - this method exists in the pseudo-virtual class
+    //   so that find_out(float t) can call this method
+    output = -1;
+    return(output);
+};
+
 int logical_block::find_output(float t){
   int temp = find_output();
   return(temp);
