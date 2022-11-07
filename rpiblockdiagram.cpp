@@ -62,6 +62,12 @@ int loop_count_block::find_output(int n){
   return(n);
 }
 
+time_block::time_block(){};//empty constructor
+
+float time_block::find_output(float t_sec){
+    output = t_sec;
+    return(t_sec);
+}
 
 int_constant_block::int_constant_block(int myvalue){
   value = myvalue;
@@ -470,15 +476,56 @@ int greater_than_block::find_output(){
   return(output);
 };
 
-int greater_than_block::find_output(float t){
+int logical_block::find_output(float t){
   int temp = find_output();
   return(temp);
 };
 
-greater_than_block::greater_than_block(block *in1, block *in2){
+logical_block::logical_block(block *in1, block *in2){
   input1 = in1;
   input2 = in2;
 };
+
+int less_than_block::find_output(){
+  //int output;
+  value1 = input1->read_output();
+  value2 = input2->read_output();
+  if (value1 < value2){
+    output = 1;
+  }
+  else{
+      output = 0;
+  }
+  return(output);
+};
+
+int and_block::find_output(){
+  //int output;
+  value1 = input1->read_output();
+  value2 = input2->read_output();
+  if (value1 > 0) && (value2 > 0){
+    output = 1;
+  }
+  else{
+      output = 0;
+  }
+  return(output);
+};
+
+
+int or_block::find_output(){
+  //int output;
+  value1 = input1->read_output();
+  value2 = input2->read_output();
+  if (value1 > 0) || (value2 > 0){
+    output = 1;
+  }
+  else{
+      output = 0;
+  }
+  return(output);
+};
+
 
 
 int addition_block::find_output(){
