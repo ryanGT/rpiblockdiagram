@@ -62,12 +62,12 @@ int loop_count_block::find_output(int n){
   return(n);
 }
 
-time_block::time_block(){};//empty constructor
-
-float time_block::find_output(float t_sec){
-    output = t_sec;
-    return(t_sec);
-}
+//time_block::time_block(){};//empty constructor
+//
+//float time_block::find_output(float t_sec){
+//    output = t_sec;
+//    return(t_sec);
+//}
 
 int_constant_block::int_constant_block(int myvalue){
   value = myvalue;
