@@ -16,7 +16,7 @@ int mysat_rtbd(int vin){
   int mymax = 255;
   int mymin = -255;
   int vout;
-  
+   int find_output(); 
   if ( vin > mymax ){
     vout = mymax;
   }
@@ -694,4 +694,18 @@ int sat2_adjustable_block::find_output(float t){
     output = input_value;
   }
   return(output);
+};
+
+
+int switch_block::find_output(){
+    // - if output is 1, leave it alone
+    // - else, check to see if condition is satisfied
+    // - output needs to be reset to 0 as a menu 
+    //   parameter
+    if (output == 0){
+        input_value = input->read_output();
+        if (input_value > 0){
+            output = 1;
+        }
+    }
 };
