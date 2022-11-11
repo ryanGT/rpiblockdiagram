@@ -74,7 +74,7 @@ public:
   }
 };
 
-class switch_block: block_with_one_input{
+class switch_block: public block_with_one_input{
  public:
    int input_value; 
    int find_output();
