@@ -65,7 +65,7 @@ class block_with_one_input: public block{
 
 class switch_block: block_with_one_input{
  public:
-   int input_values; 
+   int input_value; 
    int find_output();
 };
 
