@@ -699,6 +699,8 @@ int sat2_adjustable_block::find_output(float t){
   return(output);
 };
 
+switch_block::switch_block(){};//empty constructor
+
 
 int switch_block::find_output(){
     // - if output is 1, leave it alone

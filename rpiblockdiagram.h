@@ -63,13 +63,6 @@ class block_with_one_input: public block{
   }
 };
 
-class switch_block: block_with_one_input{
- public:
-   int input_value; 
-   int find_output();
-   void reset_switch();
-};
-
 class block_with_two_inputs: public block{
 public:
   block* input1;
@@ -79,6 +72,14 @@ public:
     input1 = IN1;
     input2 = IN2;
   }
+};
+
+class switch_block: block_with_one_input{
+ public:
+   int input_value; 
+   int find_output();
+   switch_block();
+   void reset_switch();
 };
 
 
