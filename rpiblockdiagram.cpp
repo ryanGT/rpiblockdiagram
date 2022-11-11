@@ -85,6 +85,9 @@ step_input::step_input(float switch_on_time, int Amp){
     amp = Amp;
 };
 
+
+
+
 int step_input::find_output(float t){
   //int output=0;
     if (t > on_time){
@@ -709,4 +712,8 @@ int switch_block::find_output(){
         }
     }
     return(output);
+};
+
+void switch_block::reset_switch(){
+    output = 0;
 };

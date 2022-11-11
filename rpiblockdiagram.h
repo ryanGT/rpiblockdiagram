@@ -67,6 +67,7 @@ class switch_block: block_with_one_input{
  public:
    int input_value; 
    int find_output();
+   void reset_switch();
 };
 
 class block_with_two_inputs: public block{
