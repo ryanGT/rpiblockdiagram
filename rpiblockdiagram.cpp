@@ -708,4 +708,5 @@ int switch_block::find_output(){
             output = 1;
         }
     }
+    return(output);
 };
