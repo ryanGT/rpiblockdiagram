@@ -83,6 +83,14 @@ class switch_block: public block_with_one_input{
 };
 
 
+class abs_block: public block_with_one_input{
+ public:
+   int input_value; 
+   int find_output();
+   abs_block();
+};
+
+
 class step_input: public block{
  public:
   float on_time;

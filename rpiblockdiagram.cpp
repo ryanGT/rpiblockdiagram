@@ -719,3 +719,12 @@ int switch_block::find_output(){
 void switch_block::reset_switch(){
     output = 0;
 };
+
+
+abs_block::abs_block(){};
+
+int abs_block::find_output(){
+    input_value = input->read_output();
+    output = abs(input_value);
+    return(output);
+};
