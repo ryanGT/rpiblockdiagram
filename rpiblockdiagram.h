@@ -91,6 +91,23 @@ class abs_block: public block_with_one_input{
 };
 
 
+void shift_array(float new_in, float vect_in[], int len_vect);
+
+class dig_comp_block: public block_with_one_input{
+{
+ public:
+  dig_comp_block(float *b_vect, float *a_vect, float *in_vect, float *out_vect, 
+           int len_in, int len_out);
+  int find_output(int new_in);//assuming int input for now (this could go badly)
+  int _len_out;
+  int _len_in;
+  float *_b_vect;
+  float *_a_vect;
+  float *_in_vect;
+  float *_out_vect;
+};
+
+
 class step_input: public block{
  public:
   float on_time;
@@ -420,6 +437,46 @@ class PD_control_block: public block_with_one_input{
   //int read_output(float t);
   int find_output(float t);
   void save_values(float t);
+};
+
+
+class PID_control_block: public block_with_one_input{
+ public:
+  float Kp;
+  float Kd;
+  float Ki, myint;
+  float prev_t, cur_t;
+  int prev_in;
+  float dt, din_dt;
+  int din;
+  //block* input;
+  int input_value;
+  //int output;
+  
+  PID_control_block(float KP, float KD, float KI, block *in=NULL);
+
+  //int read_output(float t);
+  int find_output(float t);
+  //void save_values(float t);
+};
+
+
+class PI_control_block: public block_with_one_input{
+ public:
+  float Kp;
+  float Ki, myint;
+  float prev_t, cur_t;
+  int prev_in;
+  float dt;
+  //block* input;
+  int input_value;
+  //int output;
+  
+  PI_control_block(float KP, float KI, block *in=NULL);
+
+  //int read_output(float t);
+  int find_output(float t);
+  //void save_values(float t);
 };
 
 
