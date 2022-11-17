@@ -94,7 +94,6 @@ class abs_block: public block_with_one_input{
 void shift_array(float new_in, float vect_in[], int len_vect);
 
 class dig_comp_block: public block_with_one_input{
-{
  public:
   dig_comp_block(float *b_vect, float *a_vect, float *in_vect, float *out_vect, 
            int len_in, int len_out);
