@@ -639,16 +639,27 @@ PID_control_block::PID_control_block(float KP, float KD, float KI, block *in){
     myint = 0.0;
 };
 
-
+void initialize(){
+    first_time = true;
+    myint = 0;
+    prev_in = 0;
+    prev_t = 0;
+}
 
 int PID_control_block::find_output(float t){
     cur_t = t;
     input_value = input->read_output();
-    dt = t - prev_t;
-    din = input_value-prev_in;
-    din_dt = ((float)din)/dt;
-    myint += input_value*dt;
-    output = (int)(Kp*input_value + Kd*din_dt + myint*Ki);
+    if (first_time){
+	first_time = false;
+	output = (int)(Kp*input_value);
+    }
+    else{
+        dt = t - prev_t;
+        din = input_value-prev_in;
+        din_dt = ((float)din)/dt;
+        myint += input_value*dt;
+        output = (int)(Kp*input_value + Kd*din_dt + myint*Ki);
+    }
     /* if (prev_t < 0){ */
     /*   output = (int)(Kp*input_value); */
     /* } */

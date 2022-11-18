@@ -448,6 +448,7 @@ class PID_control_block: public block_with_one_input{
   int prev_in;
   float dt, din_dt;
   int din;
+  bool first_time;
   //block* input;
   int input_value;
   //int output;
@@ -456,6 +457,7 @@ class PID_control_block: public block_with_one_input{
 
   //int read_output(float t);
   int find_output(float t);
+  void initialize();
   //void save_values(float t);
 };
 
