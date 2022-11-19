@@ -639,7 +639,7 @@ PID_control_block::PID_control_block(float KP, float KD, float KI, block *in){
     myint = 0.0;
 };
 
-void initialize(){
+void PID_control_block::initialize(){
     first_time = true;
     myint = 0;
     prev_in = 0;
