@@ -100,6 +100,33 @@ int step_input::find_output(float t){
 };
 
 
+
+sloped_step::sloped_step(float switch_on_time, float myslope, int AMP){
+  on_time = switch_on_time;
+  amp = AMP;
+  slope = myslope;
+}
+
+int sloped_step::find_output(float t){
+  if (t < on_time){
+	u_i = 0;
+  }
+  else if (u_i < amp){
+  	dt = t - prev_t;
+  	u_i += dt*slope;
+  }
+
+  if (u_i > amp){
+      u_i = amp;
+  }
+  
+  prev_t = t;
+
+  output = (int)u_i;
+  return(output);
+}; 
+
+
 pulse_input::pulse_input(float switch_on_time, float switch_off_time, int Amp){
   on_time = switch_on_time;
   off_time = switch_off_time;

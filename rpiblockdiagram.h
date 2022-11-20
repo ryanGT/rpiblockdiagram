@@ -117,6 +117,17 @@ class step_input: public block{
   int find_output(float t);
 };
 
+
+class sloped_step: public block{
+ public:
+     float on_time;
+     float slope;
+     int amp;
+     float u_i, prev_t, dt;
+     sloped_step(float switch_on_time=0.1, float myslope=1, int AMP=100);
+     int find_output(float t); 
+};
+
 class pulse_input: public block{
 public:
   float on_time;
