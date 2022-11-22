@@ -449,30 +449,6 @@ class PD_control_block: public block_with_one_input{
   void save_values(float t);
 };
 
-
-class PID_control_block: public block_with_one_input{
- public:
-  float Kp;
-  float Kd;
-  float Ki, myint;
-  float prev_t, cur_t;
-  int prev_in;
-  float dt, din_dt;
-  int din;
-  bool first_time;
-  //block* input;
-  int input_value;
-  //int output;
-  
-  PID_control_block(float KP, float KD, float KI, block *in=NULL);
-
-  //int read_output(float t);
-  int find_output(float t);
-  void initialize();
-  //void save_values(float t);
-};
-
-
 class PI_control_block: public block_with_one_input{
  public:
   float Kp;
@@ -481,6 +457,7 @@ class PI_control_block: public block_with_one_input{
   int prev_in;
   float dt;
   //block* input;
+  bool first_time;
   int input_value;
   //int output;
   
@@ -489,7 +466,25 @@ class PI_control_block: public block_with_one_input{
   //int read_output(float t);
   int find_output(float t);
   //void save_values(float t);
+  void initialize();  
 };
+
+
+
+class PID_control_block: public PI_control_block{
+ public:
+  float Kd;
+  float din_dt;
+  int din;
+  //block* input;
+  
+  PID_control_block(float KP, float KD, float KI, block *in=NULL);
+
+  //int read_output(float t);
+  int find_output(float t);
+  //void save_values(float t);
+};
+
 
 
 class digcomp_block: public block_with_one_input{

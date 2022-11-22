@@ -657,6 +657,41 @@ void PD_control_block::save_values(float t){
 };
 
 
+void PI_control_block::initialize(){
+    first_time = true;
+    myint = 0;
+    prev_in = 0;
+    prev_t = 0;
+}
+
+
+
+int PI_control_block::find_output(float t){
+    cur_t = t;
+    input_value = input->read_output();
+    if (first_time){
+	first_time = false;
+	output = (int)(Kp*input_value);
+    }
+    else{
+        dt = t - prev_t;
+        myint += input_value*dt;
+        output = (int)(Kp*input_value + myint*Ki);
+    /* if (prev_t < 0){ */
+    /*   output = (int)(Kp*input_value); */
+    /* } */
+    /* else{ */
+    /*   output = (int)(Kp*input_value + Kd*din_dt); */
+    /* } */
+    prev_in = input_value;
+    prev_t = cur_t;
+    return(output);
+};
+
+
+
+
+
 PID_control_block::PID_control_block(float KP, float KD, float KI, block *in){
     input = in;
     Kp = KP;
@@ -665,13 +700,6 @@ PID_control_block::PID_control_block(float KP, float KD, float KI, block *in){
     prev_t = 0.0;
     myint = 0.0;
 };
-
-void PID_control_block::initialize(){
-    first_time = true;
-    myint = 0;
-    prev_in = 0;
-    prev_t = 0;
-}
 
 int PID_control_block::find_output(float t){
     cur_t = t;
@@ -708,28 +736,6 @@ PI_control_block::PI_control_block(float KP, float KI, block *in){
     prev_t = 0.0;
     myint = 0.0;
 };
-
-
-
-int PI_control_block::find_output(float t){
-    cur_t = t;
-    input_value = input->read_output();
-    dt = t - prev_t;
-    myint += input_value*dt;
-    output = (int)(Kp*input_value + myint*Ki);
-    /* if (prev_t < 0){ */
-    /*   output = (int)(Kp*input_value); */
-    /* } */
-    /* else{ */
-    /*   
-         /*   
-         /*   output = (int)(Kp*input_value + Kd*din_dt); */
-    /* } */
-    prev_in = input_value;
-    prev_t = cur_t;
-    return(output);
-};
-
 
 
 digcomp_block::digcomp_block(float *b_vect, float *a_vect, int len_in, int len_out, block *in){
