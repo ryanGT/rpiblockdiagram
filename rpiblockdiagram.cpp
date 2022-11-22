@@ -677,12 +677,7 @@ int PI_control_block::find_output(float t){
         dt = t - prev_t;
         myint += input_value*dt;
         output = (int)(Kp*input_value + myint*Ki);
-    /* if (prev_t < 0){ */
-    /*   output = (int)(Kp*input_value); */
-    /* } */
-    /* else{ */
-    /*   output = (int)(Kp*input_value + Kd*din_dt); */
-    /* } */
+    }
     prev_in = input_value;
     prev_t = cur_t;
     return(output);
