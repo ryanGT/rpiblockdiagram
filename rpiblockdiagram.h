@@ -461,7 +461,7 @@ class PI_control_block: public block_with_one_input{
   int input_value;
   //int output;
   
-  PI_control_block(float KP, float KI, block *in=NULL);
+  PI_control_block(float KP=0.0, float KI=0.0, block *in=NULL);
 
   //int read_output(float t);
   int find_output(float t);
