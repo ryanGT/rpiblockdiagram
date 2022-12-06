@@ -831,3 +831,15 @@ int abs_block::find_output(){
     output = abs(input_value);
     return(output);
 };
+
+
+prev_hold_block::prev_hold_block(){};
+
+int prev_hold_block::find_output();
+   input_value = input->read_output();
+   output = prev_input;
+   prev_input = input_value;
+   return(output);
+};
+
+
