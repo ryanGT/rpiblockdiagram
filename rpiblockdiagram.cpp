@@ -9,6 +9,8 @@
 #include <i2c/smbus.h>
 #include <unistd.h>
 #include <math.h>
+#include <stdlib.h>
+
 
 #define TWOPI 6.28318531
 
@@ -368,6 +370,74 @@ plant_with_i2c_double_actuator_and_two_sensors::plant_with_i2c_double_actuator_a
   fd = myfd;
   Sensor1 = mysense1;
   Sensor2 = mysense2;
+}
+
+
+plant_with_rpi_motor_hat(sensor *mysense1, sensor *mysense2) : plant_with_i2c_double_actuator_and_two_sensors(0, mysense1, mysense2){
+   init_pins();
+};
+
+
+void plant_with_rpi_motor_hat::send_commands(int i){
+  int speed1, speed2;
+  speed1 = input1->read_output();
+  speed2 = input2->read_output();
+  set_motor_1_speed(speed1);
+  set_motor_2_speed(speed2);
+}
+ 
+void plant_with_rpi_motor_hat: init_pins(){
+    int q;
+
+    printf("Diag Pins:\n");
+    for(q=0;q<2;q++){
+	curpin = diagpins[q];
+	printf("curpin = %d\n",curpin);
+	pinMode(curpin, INPUT);
+        pullUpDnControl(M1DIAG,PUD_UP);
+    }
+  
+    printf("\npwm pins:\n");
+    for(q=0;q<2;q++){
+	curpin = pwmpins[q];
+	printf("curpin = %d\n",curpin);
+	pinMode(curpin, PWM_OUTPUT);
+    }
+
+    printf("\noutput pins:\n");
+    for(q=0;q<4;q++){
+	curpin = outputpins[q];
+	printf("curpin = %d\n",curpin);
+	pinMode(curpin, OUTPUT);
+    }
+
+    digitalWrite(M1EN, HIGH);
+    digitalWrite(M2EN, HIGH);
+
+    pwmSetMode(PWM_MODE_MS);
+    pwmSetClock(2);
+    pwmSetRange(maxspeed);
+};
+
+
+void plant_with_rpi_motor_hat: set_motor_speed(int speed, int pwmpin, int dirpin){
+	if (speed < 0){
+	    digitalWrite(dirpin, 1);
+	}
+	else{
+	    digitalWrite(dirpin, 0);
+	}
+	pwmWrite(pwmpin, abs(speed));
+};
+
+
+void plant_with_rpi_motor_hat: set_motor_1_speed(int speed1){
+    set_motor_speed(speed1, M1PWM, M1DIR);
+}
+
+
+void plant_with_rpi_motor_hat: set_motor_2_speed(int speed2){
+    set_motor_speed(speed2, M2PWM, M2DIR);
 }
 
 

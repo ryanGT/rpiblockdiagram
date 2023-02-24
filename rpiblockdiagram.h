@@ -10,6 +10,10 @@
 #include <linux/i2c-dev.h>
 #include <i2c/smbus.h>
 #include <unistd.h>
+#include <math.h>
+#include <stdlib.h>
+
+
 
 
 #define MAXLEN 10
@@ -332,7 +336,7 @@ public:
   //int get_reading();
   //void send_commands();
   //int read_output(float t);
-  void send_commands(int i);
+  virtual void send_commands(int i);
   void stop_motors();
   void send_cal_cmd();  
   void set_fd(int myfd);
@@ -341,6 +345,44 @@ public:
 };
 
 
+class plant_with_rpi_motor_hat: public plant_with_i2c_double_actuator_and_two_sensors{
+  //similar to plant_with_i2c_double_actuator_and_two_sensors, but without the Mega
+  //and i2c to send motor commands.
+  //
+  //Weird C++ problem: the parent constructor must be called
+  //- we don't have an fd for this class
+  //- do we actually want to inherit from plant_with_double_actuator_two_sensors instead?
+  //    - that doesn't solve the problem, because then we need an actuator pointer
+public:
+    //assuming most things inherit from parent class
+    //- call parent constructor with fake file descriptor of 0
+    plant_with_rpi_motor_hat(sensor *mysense1, sensor *mysense2);
+
+    int M1DIAG = 5;
+    int M2DIAG = 6;
+    int M1PWM = 12;//GPIO12, Phys32
+    int M2PWM = 13;
+    int M1EN = 22;//WPi3, GPIO22
+    int M2EN = 23;
+    int M1DIR = 24;
+    int M2DIR = 25;
+    int pwmpins[] = {M1PWM,M2PWM};
+    int outputpins[] = {M1EN, M2EN, M1DIR, M2DIR};
+    int diagpins[] = {M1DIAG,M2DIAG};
+    void set_motor_speed(int speed, int pwmpin, int dirpin);
+    void set_motor_1_speed(int speed1);
+    void set_motor_2_speed(int speed2);
+
+    int maxspeed = 540;
+
+    void init_pins();
+
+};
+
+
+
+
+};
 
 
 class summing_junction: public block{
