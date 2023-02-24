@@ -366,23 +366,24 @@ public:
     int M2EN = 23;
     int M1DIR = 24;
     int M2DIR = 25;
-    int pwmpins[] = {M1PWM,M2PWM};
-    int outputpins[] = {M1EN, M2EN, M1DIR, M2DIR};
-    int diagpins[] = {M1DIAG,M2DIAG};
     void set_motor_speed(int speed, int pwmpin, int dirpin);
     void set_motor_1_speed(int speed1);
     void set_motor_2_speed(int speed2);
+
+    void send_commands(int i);
 
     int maxspeed = 540;
 
     void init_pins();
 
+    int pwmpins[2] = {M1PWM,M2PWM};
+    int outputpins[4] = {M1EN, M2EN, M1DIR, M2DIR};
+    int diagpins[2] = {M1DIAG,M2DIAG};
+
 };
 
 
 
-
-};
 
 
 class summing_junction: public block{

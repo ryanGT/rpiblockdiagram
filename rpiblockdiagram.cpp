@@ -370,10 +370,10 @@ plant_with_i2c_double_actuator_and_two_sensors::plant_with_i2c_double_actuator_a
   fd = myfd;
   Sensor1 = mysense1;
   Sensor2 = mysense2;
-}
+};
 
 
-plant_with_rpi_motor_hat(sensor *mysense1, sensor *mysense2) : plant_with_i2c_double_actuator_and_two_sensors(0, mysense1, mysense2){
+plant_with_rpi_motor_hat::plant_with_rpi_motor_hat(sensor *mysense1, sensor *mysense2) : plant_with_i2c_double_actuator_and_two_sensors(0, mysense1, mysense2){
    init_pins();
 };
 
@@ -386,8 +386,8 @@ void plant_with_rpi_motor_hat::send_commands(int i){
   set_motor_2_speed(speed2);
 }
  
-void plant_with_rpi_motor_hat: init_pins(){
-    int q;
+void plant_with_rpi_motor_hat:: init_pins(){
+    int q, curpin;
 
     printf("Diag Pins:\n");
     for(q=0;q<2;q++){
@@ -420,7 +420,7 @@ void plant_with_rpi_motor_hat: init_pins(){
 };
 
 
-void plant_with_rpi_motor_hat: set_motor_speed(int speed, int pwmpin, int dirpin){
+void plant_with_rpi_motor_hat:: set_motor_speed(int speed, int pwmpin, int dirpin){
 	if (speed < 0){
 	    digitalWrite(dirpin, 1);
 	}
@@ -431,12 +431,12 @@ void plant_with_rpi_motor_hat: set_motor_speed(int speed, int pwmpin, int dirpin
 };
 
 
-void plant_with_rpi_motor_hat: set_motor_1_speed(int speed1){
+void plant_with_rpi_motor_hat:: set_motor_1_speed(int speed1){
     set_motor_speed(speed1, M1PWM, M1DIR);
 }
 
 
-void plant_with_rpi_motor_hat: set_motor_2_speed(int speed2){
+void plant_with_rpi_motor_hat:: set_motor_2_speed(int speed2){
     set_motor_speed(speed2, M2PWM, M2DIR);
 }
 
