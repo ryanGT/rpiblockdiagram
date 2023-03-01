@@ -374,7 +374,7 @@ plant_with_i2c_double_actuator_and_two_sensors::plant_with_i2c_double_actuator_a
 
 
 plant_with_rpi_motor_hat::plant_with_rpi_motor_hat(sensor *mysense1, sensor *mysense2) : plant_with_i2c_double_actuator_and_two_sensors(0, mysense1, mysense2){
-   init_pins();
+   //init_pins();
 };
 
 
