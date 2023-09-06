@@ -213,7 +213,6 @@ class i2c_actuator: public actuator{
   void send_command(int speed);
   void send_command(int speed, int n);
   void set_fd(int fd);
-  void stop();
 };
 
 
@@ -312,6 +311,7 @@ class i2c_plant: public plant{
   int find_output(float t);
   //int read_output(float t);
   //int find_output(float t);//<-- should be same as parent class
+  void stop();
 };
 
 
