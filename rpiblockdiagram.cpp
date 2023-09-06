@@ -293,6 +293,11 @@ void i2c_actuator::send_command(int cmd, int n){
   write(fd, act_buffer, act_bytes);
 };
 
+
+void i2c_actuator::send_command(int cmd){
+    send_command(cmd, 0);
+};
+
 encoder::encoder(int ENCODER_PIN_B){
     encoderPinB = ENCODER_PIN_B;
 };

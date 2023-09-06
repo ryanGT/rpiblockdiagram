@@ -210,6 +210,7 @@ class i2c_actuator: public actuator{
   uint8_t act_buffer[20];
 
   i2c_actuator(int NUM_BYTES);
+  void send_command(int speed);
   void send_command(int speed, int n);
   void set_fd(int fd);
 };
