@@ -539,6 +539,9 @@ void i2c_plant::set_sensor_fd(int fd){
    Sensor->set_fd(fd);  
 };
  
+void i2c_plant::stop(){
+   Actuator->send_command(0,0);
+};
 
 void plant_with_i2c_double_actuator_and_two_sensors::send_commands(int i){
   int speed1, speed2;

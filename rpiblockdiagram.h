@@ -213,6 +213,7 @@ class i2c_actuator: public actuator{
   void send_command(int speed);
   void send_command(int speed, int n);
   void set_fd(int fd);
+  void stop();
 };
 
 
