@@ -268,7 +268,7 @@ class analog_sensor: public sensor{
 class i2c_sensor: public sensor{
  public:
    int fd;
-   int output;
+   //int output;
    int in_bytes;
    // pretty sure this won't fly in the constructor:
    uint8_t sensor_buffer[20];
