@@ -301,7 +301,7 @@ class i2c_plant: public plant{
   i2c_sensor* Sensor;
   // a plant block should still have an input block pointer
 
-  i2c_plant(i2c_actuator *myact, i2c_sensor *mysense) : plant(myact, mysense);
+  i2c_plant(i2c_actuator *myact, i2c_sensor *mysense) : plant(myact, mysense) {};
 
   //int get_reading();//<-- should be same as parent class
   void send_command(int n);
