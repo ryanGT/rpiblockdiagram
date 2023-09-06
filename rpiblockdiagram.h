@@ -308,6 +308,7 @@ class i2c_plant: public plant{
   void send_command(int n);
   void set_act_fd(int fd);
   void set_sensor_fd(int fd);
+  int find_output(float t);
   //int read_output(float t);
   //int find_output(float t);//<-- should be same as parent class
 };

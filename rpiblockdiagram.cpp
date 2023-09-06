@@ -276,6 +276,12 @@ void i2c_actuator::set_fd(int myfd){
    fd = myfd;   
 };
 
+int i2c_plant::find_output(float t){
+    output = Sensor->get_reading();
+    return(output);
+};
+
+
 
 void i2c_actuator::send_command(int cmd, int n){
   uint8_t cmd_msb, cmd_lsb, nlsb, nmsb;
