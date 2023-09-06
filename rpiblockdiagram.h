@@ -211,7 +211,7 @@ class i2c_actuator: public actuator{
 
   i2c_actuator(int NUM_BYTES);
   void send_command(int speed, int n);
-  void set_fd(int fd)
+  void set_fd(int fd);
 };
 
 
@@ -277,7 +277,7 @@ class i2c_sensor: public sensor{
    void set_fd(int myfd);
 
    i2c_sensor(int NUM_BYTES);
-}
+};
 
 
 class plant: public block_with_one_input{
@@ -297,12 +297,11 @@ class plant: public block_with_one_input{
 
 class i2c_plant: public plant{
  public:
-  //actuator* Actuator;
-  //sensor* Sensor;
+  i2c_actuator* Actuator;
+  i2c_sensor* Sensor;
   // a plant block should still have an input block pointer
 
-  // Constructor is the same as base class, so I think it is not needed  
-  //i2c_plant(actuator *myact, sensor *mysense);
+  i2c_plant(i2c_actuator *myact, i2c_sensor *mysense);
 
   //int get_reading();//<-- should be same as parent class
   void send_command(int n);
@@ -310,7 +309,7 @@ class i2c_plant: public plant{
   void set_sensor_fd(int fd);
   //int read_output(float t);
   //int find_output(float t);//<-- should be same as parent class
-}
+};
 
 
 class plant_no_actuator: public block_with_one_input{

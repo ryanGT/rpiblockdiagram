@@ -348,6 +348,13 @@ plant::plant(actuator *myact, sensor *mysense){
     Sensor = mysense;
 };
 
+
+i2c_plant::i2c_plant(i2c_actuator *myact, i2c_sensor *mysense){
+    Actuator = myact;
+    Sensor = mysense;
+};
+
+
 int plant::get_reading(){
     return Sensor->get_reading();
 };
