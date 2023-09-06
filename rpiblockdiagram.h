@@ -387,7 +387,7 @@ public:
   //int find_output();//<-- just inherit these
 };
 
-class plant_with_i2c_sensor_and_actuator: public plant{
+/*class plant_with_i2c_sensor_and_actuator: public plant{
  public:
    int fd;
    sensor* Sensor;
@@ -396,7 +396,7 @@ class plant_with_i2c_sensor_and_actuator: public plant{
    void stop();
    void set_fd(int myfd);
    plant_with_i2c_sensor_and_actuator(int myfd=0, sensor *mysense);
-};
+};*/
 
 
 
