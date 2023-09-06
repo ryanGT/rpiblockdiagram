@@ -350,7 +350,7 @@ plant::plant(actuator *myact, sensor *mysense){
 
 
 i2c_plant::i2c_plant(i2c_actuator *myact, i2c_sensor *mysense){
-    plant(myact, mysense);
+    //plant(myact, mysense);
     Actuator = myact;
     Sensor = mysense;
 };
