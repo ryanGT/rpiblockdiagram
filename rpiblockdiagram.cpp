@@ -39,6 +39,17 @@ uint8_t getsecondbyte(int input){
   return output;
 }
 
+int reassemblebytes(uint8_t msb, uint8_t lsb){
+  int output;
+  output = (int)(msb << 8);
+  output += lsb;
+  if (output > 2^15-1){
+    output -= 2^16;
+  }
+  return output;
+}
+
+
 
 void shift_array_rtbd(float new_in, float vect_in[], int len_vect){
   int i;
@@ -247,6 +258,40 @@ void h_bridge_actuator::send_command(int speed){
     }
 };
 
+/*class i2c_actuator: public actuator{
+ public:
+  int act_bytes, fd;
+  uint8_t act_buffer[20];
+
+  i2c_actuator(int NUMBYTES);
+  void send_command(int speed);
+  void set_fd(int fd)
+};*/
+
+i2c_actuator::i2c_actuator(int NUM_BYTES){
+  act_bytes = NUM_BYTES;
+};
+
+void i2c_actuator::set_fd(int myfd){
+   fd = myfd;   
+};
+
+
+void i2c_actuator::send_command(int cmd, int n){
+  uint8_t cmd_msb, cmd_lsb, nlsb, nmsb;
+  nlsb = (uint8_t)n;
+  nmsb = getsecondbyte(n);
+  cmd_lsb = (uint8_t)cmd;
+  cmd_msb = getsecondbyte(cmd);
+
+  act_buffer[0] = 3;
+  act_buffer[1] = nmsb;
+  act_buffer[2] = nlsb;
+  act_buffer[3] = cmd_msb;
+  act_buffer[4] = cmd_lsb;
+
+  write(fd, act_buffer, act_bytes);
+};
 
 encoder::encoder(int ENCODER_PIN_B){
     encoderPinB = ENCODER_PIN_B;
@@ -281,6 +326,21 @@ analog_sensor::analog_sensor(int ANALOG_PIN){
 int analog_sensor::get_reading(){
   output = analogRead(analog_pin);
   return(output);
+};
+
+
+i2c_sensor::i2c_sensor(int NUM_BYTES){
+  in_bytes = NUM_BYTES;
+};
+
+int i2c_sensor::get_reading(){
+  read(fd, sensor_buffer, in_bytes);
+  output = reassemblebytes(sensor_buffer[0], sensor_buffer[1]);
+  return(output);
+};
+
+void i2c_sensor::set_fd(int myfd){
+   fd = myfd;   
 };
 
 plant::plant(actuator *myact, sensor *mysense){
@@ -445,6 +505,20 @@ void plant_with_i2c_double_actuator_and_two_sensors::set_fd(int myfd){
   fd = myfd;
 }
 
+void i2c_plant::send_command(int n){
+   int cmd;
+   cmd = input->read_output();  
+   Actuator->send_command(cmd, n);
+};
+  
+void i2c_plant::set_act_fd(int fd){
+   Actuator->set_fd(fd); 
+};
+  
+void i2c_plant::set_sensor_fd(int fd){
+   Sensor->set_fd(fd);  
+};
+ 
 
 void plant_with_i2c_double_actuator_and_two_sensors::send_commands(int i){
   int speed1, speed2;

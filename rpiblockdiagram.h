@@ -14,13 +14,13 @@
 #include <stdlib.h>
 
 
-
-
 #define MAXLEN 10
 
 int mysat_rtbd(int vin);
 
 uint8_t getsecondbyte(int input);
+
+int reassemblebytes(uint8_t msb, uint8_t lsb);
  
 void shift_array_rtbd(float new_in, float vect_in[], int len_vect);
   
@@ -204,6 +204,17 @@ class h_bridge_actuator: public actuator{
   void send_command(int speed);
 };
 
+class i2c_actuator: public actuator{
+ public:
+  int act_bytes, fd;
+  uint8_t act_buffer[20];
+
+  i2c_actuator(int NUM_BYTES);
+  void send_command(int speed, int n);
+  void set_fd(int fd)
+};
+
+
 
 class pwm_output: public actuator{
 public:
@@ -253,6 +264,21 @@ class analog_sensor: public sensor{
   int get_reading();
 };
 
+class i2c_sensor: public sensor{
+ public:
+   int fd;
+   int output;
+   int in_bytes;
+   // pretty sure this won't fly in the constructor:
+   uint8_t sensor_buffer[20];
+   // do I just create a buffer of 20 bytes and always have extras?
+
+   int get_reading();
+   void set_fd(int myfd);
+
+   i2c_sensor(int NUM_BYTES);
+}
+
 
 class plant: public block_with_one_input{
  public:
@@ -267,6 +293,24 @@ class plant: public block_with_one_input{
   //int read_output(float t);
   int find_output(float t);
 };
+
+
+class i2c_plant: public plant{
+ public:
+  //actuator* Actuator;
+  //sensor* Sensor;
+  // a plant block should still have an input block pointer
+
+  // Constructor is the same as base class, so I think it is not needed  
+  //i2c_plant(actuator *myact, sensor *mysense);
+
+  //int get_reading();//<-- should be same as parent class
+  void send_command(int n);
+  void set_act_fd(int fd);
+  void set_sensor_fd(int fd);
+  //int read_output(float t);
+  //int find_output(float t);//<-- should be same as parent class
+}
 
 
 class plant_no_actuator: public block_with_one_input{
@@ -343,6 +387,19 @@ public:
   //int find_output(float t);//<-- just inherit these
   //int find_output();//<-- just inherit these
 };
+
+class plant_with_i2c_sensor_and_actuator: public plant{
+ public:
+   int fd;
+   sensor* Sensor;
+   int output;
+   void send_commands(int i);
+   void stop();
+   void set_fd(int myfd);
+   plant_with_i2c_sensor_and_actuator(int myfd=0, sensor *mysense);
+};
+
+
 
 
 class plant_with_rpi_motor_hat: public plant_with_i2c_double_actuator_and_two_sensors{
