@@ -285,6 +285,7 @@ class plant: public block_with_one_input{
   actuator* Actuator;
   sensor* Sensor;
   // a plant block should still have an input block pointer  
+  plant(){};
   plant(actuator *myact, sensor *mysense);
 
   int get_reading();
