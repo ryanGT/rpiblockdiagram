@@ -14,6 +14,9 @@
 
 #define TWOPI 6.28318531
 
+int twos_comp_max = pow(2,15)-1;
+int twos_comp_shift = pow(2,16);
+
 int mysat_rtbd(int vin){
   int mymax = 255;
   int mymin = -255;
@@ -41,10 +44,11 @@ uint8_t getsecondbyte(int input){
 
 int reassemblebytes(uint8_t msb, uint8_t lsb){
   int output;
-  output = (int)(msb << 8);
-  output += lsb;
-  if (output > 2^15-1){
-    output -= 2^16;
+  output = 256*(int)msb + (int)lsb;
+  //output = lsb + 256*msb;
+  //output += lsb;
+  if (output > twos_comp_max){
+    output -= twos_comp_shift;
   }
   return output;
 }
@@ -347,6 +351,7 @@ i2c_sensor::i2c_sensor(int NUM_BYTES){
 int i2c_sensor::get_reading(){
   read(fd, sensor_buffer, in_bytes);
   output = reassemblebytes(sensor_buffer[0], sensor_buffer[1]);
+  //output = 256*(int)sensor_buffer[0] + (int)sensor_buffer[1];
   return(output);
 };
 
