@@ -280,6 +280,18 @@ void i2c_actuator::set_fd(int myfd){
    fd = myfd;   
 };
 
+
+void i2c_actuator::send_cmd(int cmd){
+    //send a command byte to the Arduino
+  act_buffer[0] = cmd;
+  act_buffer[1] = 0;
+  act_buffer[2] = 0;
+  act_buffer[3] = 0;
+  act_buffer[4] = 0;
+
+  write(fd, act_buffer, act_bytes);
+}
+
 int i2c_plant::find_output(float t){
     output = Sensor->get_reading();
     return(output);
@@ -547,6 +559,11 @@ void i2c_plant::set_sensor_fd(int fd){
 void i2c_plant::stop(){
    Actuator->send_command(0,0);
 };
+
+
+void i2c_plant::start_test(){
+    Actuator->send_cmd(1);
+}
 
 void plant_with_i2c_double_actuator_and_two_sensors::send_commands(int i){
   int speed1, speed2;
